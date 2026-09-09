@@ -29,7 +29,7 @@ Item {
     readonly property string pluginId: "darren.randomsaver"
     readonly property string home: Quickshell.env("HOME") || ""
     readonly property string pluginDir: home + "/.config/omarchy/plugins/darren.randomsaver"
-    readonly property string convertScript: pluginDir + "/scripts/convert.py"
+    readonly property string renderScript: pluginDir + "/scripts/render.sh"
     readonly property string wordsPath: pluginDir + "/words.txt"
     readonly property string defaultArt: pluginDir + "/default-screensaver.txt"
     readonly property string screensaverOut: home + "/.config/omarchy/branding/screensaver.txt"
@@ -150,7 +150,7 @@ Item {
         var chosen = Model.pickRandom(root.words)
         root.lastActivated = chosen
         root.statusMessage = "Activating: " + chosen + "…"
-        convertProc.command = ["python3", root.convertScript, chosen, root.screensaverOut]
+        convertProc.command = ["bash", root.renderScript, chosen, root.screensaverOut]
         convertProc.running = true
     }
 
