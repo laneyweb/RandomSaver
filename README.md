@@ -66,8 +66,7 @@ panel) on any write there.
 `omarchy ascii` (touch-kerned glyphs). Only the CLI differs: upstream reads
 args/stdin and prints to stdout; ours takes a word plus an output path.
 The font draws letters and spaces only — digits/punctuation are skipped
-with a stderr note. An earlier pyfiglet backend was removed because its
-smushing rules rendered differently from Omarchy's own tooling.
+with a stderr note.
 
 ## Development notes
 

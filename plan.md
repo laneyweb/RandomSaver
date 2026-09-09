@@ -29,21 +29,15 @@ App: RandomSaver | User: darren | Plan scope: v1.0.0 panel plugin
       shell's file watcher reload and destroy the open panel)
 - [x] "Randomise on reboot / restart shell" option: checkbox in panel
       persisted to state-dir settings.json; headless Service.qml renders one
-      random word at every shell start (covers login/boot and restarts);
-      verified off-by-default safe, on-triggers-render + log line, and a
-      canary-file test proving the start-up write end to end (retired the
-      one-shot systemd unit experiment in favour of this self-contained way)
+       random word at every shell start (covers login/boot and restarts);
+       verified off-by-default safe, on-triggers-render + log line, and a
+       canary-file test proving the start-up write end to end
 - [x] PanelKeyCatcher `blocked` while the new-word field has focus
 - [x] Add LICENSE + THIRD-PARTY-NOTICES + per-file attribution header
 - [x] Test with omarchy plugin validate (exit 0, work + installed copies)
 - [x] Test render output, random activation, restore, hide/resummon cycle
       (hyprctl mapped:1; clean shell log)
 - [x] Install to ~/.config/omarchy/plugins/darren.randomsaver/ + enable
-- [x] Superseded (kept for history): pyfiglet bundle + convert.py +
-      fonts/.flf (removed — smushing differed from Omarchy's renderer);
-      Plugin.qml with inverted FloatingWindow root (replaced);
-      keepLoaded:true experiment (removed); words.txt written in place
-      (moved to state dir)
 
 ## Pending / Blocked
 - [ ] Commit/push current state (https://github.com/laneyweb/RandomSaver)
