@@ -1,5 +1,7 @@
 # RandomSaver
 
+Add a list of words to randomly show as the text in the system screensaver.
+
 Standalone panel plugin for Omarchy 4 (Quattro). Manages a word list, renders
 a random word as ASCII art in Delta Corps Priest 1 — the same font and engine
 as the Omarchy logo — and writes it to the screensaver branding file. Ships
