@@ -252,7 +252,7 @@ Item {
                 spacing: 10
 
                 Label {
-                    text: "RandomSaver v1.0.0"
+                    text: "RandomSaver v1.1.0"
                     font.bold: true
                     font.pixelSize: 16
                     color: "#ffffff"

@@ -8,11 +8,25 @@ with a backup of the default art plus one-click restore.
 ## Install
 
 ```sh
-# from a checkout:
-cp -r . ~/.config/omarchy/plugins/darren.randomsaver/
-omarchy-shell shell rescanPlugins
-omarchy plugin enable darren.randomsaver
+omarchy plugin add https://github.com/laneyweb/RandomSaver.git --enable
 ```
+
+## Remove
+
+```sh
+omarchy plugin remove darren.randomsaver
+```
+
+Removal deletes the plugin checkout. These files it created outside its
+folder are left behind — delete them too for a full cleanup:
+
+```sh
+rm -rf "${XDG_STATE_HOME:-~/.local/state}/omarchy/randomsaver"
+```
+
+(`~/.config/omarchy/branding/screensaver.txt` is only ever written when you
+press Random Activate or enable the opt-in start-up option; use Restore
+Default in the panel to put the stock art back.)
 
 ## Usage
 

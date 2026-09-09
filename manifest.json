@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "darren.randomsaver",
   "name": "RandomSaver",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "darren",
   "license": "MIT",
-  "description": "Panel plugin to manage random words for the Omarchy screensaver with local ASCII conversion using Delta Corps Priest 1.",
+  "description": "Random-word ASCII art for the Omarchy screensaver.",
   "kinds": ["panel", "service"],
   "entryPoints": {
     "panel": "SaverPanel.qml",
