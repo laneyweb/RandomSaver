@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
+import qs.Commons
 import qs.Ui
 import "Model.js" as Model
 
@@ -30,7 +31,13 @@ Item {
     readonly property string home: Quickshell.env("HOME") || ""
     readonly property string pluginDir: home + "/.config/omarchy/plugins/darren.randomsaver"
     readonly property string renderScript: pluginDir + "/scripts/render.sh"
-    readonly property string wordsPath: pluginDir + "/words.txt"
+    // Writable state MUST live outside the plugin dir: the shell watches
+    // ~/.config/omarchy/plugins/ and reloads (destroying this panel) on any
+    // write. pluginDir/words.txt is only the read-only seed.
+    readonly property string stateBase: Quickshell.env("XDG_STATE_HOME") || home + "/.local/state"
+    readonly property string stateDir: stateBase + "/omarchy/randomsaver"
+    readonly property string wordsPath: stateDir + "/words.txt"
+    readonly property string seedPath: pluginDir + "/words.txt"
     readonly property string defaultArt: pluginDir + "/default-screensaver.txt"
     readonly property string screensaverOut: home + "/.config/omarchy/branding/screensaver.txt"
 
@@ -66,7 +73,30 @@ Item {
             root.close()
     }
 
-    // ---- persisted word list ----
+    // ---- persisted word list (under XDG state dir, NOT the plugin dir) ----
+    // Seeds from the shipped words.txt on first run.
+    Process {
+        id: ensureStateProc
+        running: false
+        onExited: wordsFile.reload()
+        stderr: StdioCollector {
+            waitForEnd: true
+            onStreamFinished: {
+                if (text.trim() !== "")
+                    console.warn(root.pluginId, "state stderr:", text.trim())
+            }
+        }
+    }
+
+    function ensureState() {
+        if (ensureStateProc.running)
+            return
+        ensureStateProc.command = ["bash", "-c", "mkdir -p " + Util.shellQuote(root.stateDir) + " && [ -s " + Util.shellQuote(root.wordsPath) + " ] || cp " + Util.shellQuote(root.seedPath) + " " + Util.shellQuote(root.wordsPath)]
+        ensureStateProc.running = true
+    }
+
+    Component.onCompleted: ensureState()
+
     FileView {
         id: wordsFile
         path: root.wordsPath
@@ -179,6 +209,9 @@ Item {
         PanelKeyCatcher {
             id: keyCatcher
             anchors.fill: parent
+            // While typing a new word, keys (Esc/Space/x/Enter/j/k/…) go to
+            // the field, not the panel — documented PanelKeyCatcher pattern.
+            blocked: newWordField.activeFocus
             onCloseRequested: root.requestClose()
 
             ColumnLayout {

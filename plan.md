@@ -20,6 +20,7 @@ App: RandomSaver | User: darren | Plan scope: v1.0.0 panel plugin
 - [x] Enable plugin (omarchy plugin enable: enabled=true)
 - [x] Add keepLoaded: true to manifest (final fix attempt)
 - [x] Replaced pyfiglet backend with Omarchy's own awk renderer (scripts/render.sh adapted from omacom/omarchy bin/omarchy-ascii; deleted convert.py, pyfiglet bundle, fonts/; QML now runs bash render.sh; random-activate.py uses subprocess + portable paths)
+- [x] Fixed Add/Remove closing the panel: words now persist under XDG state dir (shell file-watcher reloads the plugin on any write inside the plugin dir); seed from shipped words.txt on first open; PanelKeyCatcher blocked while typing
 
 ## Pending / Blocked
 - [x] Panel floating surface now renders (fixed: Item root + FloatingWindow child, removed keepLoaded, Process/FileView backend; verified with hyprctl mapped:1 after shell restart — earlier no-show was stale shell Loader state + inverted root, not compositor)

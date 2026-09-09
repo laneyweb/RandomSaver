@@ -7,7 +7,8 @@ Omarchy 4 standalone panel plugin. Converts random words to ASCII art (Delta Cor
 - Model.js — pure helpers (parse/serialize/pickRandom, .pragma library)
 - scripts/render.sh — ASCII conversion (bash+awk engine adapted from omacom/omarchy bin/omarchy-ascii, MIT; embedded Delta Corps Priest 1 font, touch-kerned like the Omarchy logo)
 - scripts/random-activate.py — picks random word and activates screensaver
-- words.txt — persisted word list
+- words.txt — shipped seed word list (copied to state dir on first run)
+- Live words live at `${XDG_STATE_HOME:-~/.local/state}/omarchy/randomsaver/words.txt` — writable state must stay out of the plugin dir or the shell's file watcher reloads (and closes) the panel on every save
 - default-screensaver.txt — backup of original screensaver
 
 ## Usage
