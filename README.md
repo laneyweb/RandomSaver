@@ -1,6 +1,10 @@
 # RandomSaver
 
-Add a list of words to randomly show as the text in the system screensaver.
+Add a list of words to randomly show as the text in the system screensaver. Choose to update to a random word manually or every boot/reload. 
+
+![The main panel](preview.png)
+
+Your original screensaver is kept safe to restore if you want to. 
 
 Standalone panel plugin for Omarchy 4 (Quattro). Manages a word list, renders
 a random word as ASCII art in Delta Corps Priest 1 — the same font and engine
