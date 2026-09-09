@@ -6,8 +6,9 @@
   "author": "darren",
   "license": "MIT",
   "description": "Panel plugin to manage random words for the Omarchy screensaver with local ASCII conversion using Delta Corps Priest 1.",
-  "kinds": ["panel"],
+  "kinds": ["panel", "service"],
   "entryPoints": {
-    "panel": "SaverPanel.qml"
+    "panel": "SaverPanel.qml",
+    "service": "Service.qml"
   }
 }

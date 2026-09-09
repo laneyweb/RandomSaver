@@ -1,12 +1,14 @@
 #!/bin/bash
 # RandomSaver ASCII renderer.
 #
-# Adapted from omacom/omarchy bin/omarchy-ascii (MIT License,
-# Copyright (c) David Heinemeier Hansson) for the plugin's CLI contract:
+# Third-party code notice: the awk engine and embedded Delta Corps Priest 1
+# font below are adapted from omacom/omarchy bin/omarchy-ascii
+# (https://github.com/omacom/omarchy/blob/quattro/bin/omarchy-ascii),
+# Copyright (c) David Heinemeier Hansson, MIT License. Full text in
+# THIRD-PARTY-NOTICES at the repo root. Changes vs upstream: CLI contract is
 #   render.sh "<text>" <output_file>
-# The awk engine and embedded Delta Corps Priest 1 font below are unchanged
-# from upstream; only the argument handling here differs (upstream reads
-# args/stdin and prints to stdout, we take a word + output path).
+# (upstream reads args/stdin and prints to stdout; we take a word + output
+# path). The awk program and font data themselves are unchanged.
 #
 # Delta Corps Priest 1 draws letters and spaces only. Digits and punctuation
 # have no glyph in it, so they are skipped (noted on stderr).

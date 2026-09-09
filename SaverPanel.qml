@@ -37,11 +37,13 @@ Item {
     readonly property string stateBase: Quickshell.env("XDG_STATE_HOME") || home + "/.local/state"
     readonly property string stateDir: stateBase + "/omarchy/randomsaver"
     readonly property string wordsPath: stateDir + "/words.txt"
+    readonly property string settingsPath: stateDir + "/settings.json"
     readonly property string seedPath: pluginDir + "/words.txt"
     readonly property string defaultArt: pluginDir + "/default-screensaver.txt"
     readonly property string screensaverOut: home + "/.config/omarchy/branding/screensaver.txt"
 
     property var words: ["hello", "world", "omarchy", "random", "screensaver"]
+    property bool randomizeOnStart: false
     property string statusMessage: ""
     property string lastActivated: ""
 
@@ -78,7 +80,10 @@ Item {
     Process {
         id: ensureStateProc
         running: false
-        onExited: wordsFile.reload()
+        onExited: {
+            wordsFile.reload()
+            settingsFile.reload()
+        }
         stderr: StdioCollector {
             waitForEnd: true
             onStreamFinished: {
@@ -110,6 +115,33 @@ Item {
 
     function saveWords() {
         wordsFile.setText(Model.serializeWords(root.words))
+    }
+
+    // ---- start-up option (read by Service.qml at shell start) ----
+    FileView {
+        id: settingsFile
+        path: root.settingsPath
+        watchChanges: true
+        atomicWrites: true
+        printErrors: false
+        onLoaded: {
+            try {
+                var parsed = JSON.parse(text() || "{}")
+                root.randomizeOnStart = parsed && parsed.randomizeOnStart === true
+            } catch (e) {
+                root.randomizeOnStart = false
+            }
+        }
+        onFileChanged: reload()
+        onLoadFailed: root.randomizeOnStart = false
+    }
+
+    function setRandomizeOnStart(value) {
+        // Coerce: shell IPC delivers strings, the checkbox delivers bools.
+        var on = value === true || String(value).toLowerCase() === "true"
+        root.randomizeOnStart = on
+        settingsFile.setText(JSON.stringify({ randomizeOnStart: on }, null, 2) + "\n")
+        root.statusMessage = on ? "Will randomise on reboot / restart" : "Start-up randomise off"
     }
 
     function addWord(w) {
@@ -297,6 +329,12 @@ Item {
                         text: "Close"
                         onClicked: root.requestClose()
                     }
+                }
+
+                CheckBox {
+                    text: "Randomise on reboot / restart shell"
+                    checked: root.randomizeOnStart
+                    onToggled: root.setRandomizeOnStart(checked)
                 }
 
                 Label {
