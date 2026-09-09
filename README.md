@@ -3,7 +3,8 @@ Omarchy 4 standalone panel plugin. Converts random words to ASCII art (Delta Cor
 
 ## Files
 - manifest.json — plugin contract (v1.0.0, kind: panel)
-- Plugin.qml — panel entry point (FloatingWindow + Item)
+- SaverPanel.qml — panel entry point (Item root + FloatingWindow, GalleryPanel pattern)
+- Model.js — pure helpers (parse/serialize/pickRandom, .pragma library)
 - fonts/Delta Corps Priest 1.flf — bundled FIGlet font
 - scripts/convert.py — local ASCII conversion using bundled pyfiglet
 - scripts/random-activate.py — picks random word and activates screensaver
@@ -24,7 +25,8 @@ python3 scripts/random-activate.py
 - Random activation tested
 - Default backup verified
 - Panel installed and enabled; summon returns ok
-- Visibility issue: floating surface does not render on current session/compositor (non-fatal layer-shell display issue, not plugin logic failure)
+- Visibility fixed: root is now Item with open()/close(), FloatingWindow child (was inverted); dropped keepLoaded to match dev-gallery, the only first-party FloatingWindow panel; Model.js rewritten as pure library, exec via Quickshell.Io Process, words via FileView
+- Verified after `omarchy restart shell`: summon maps RandomSaver window (hyprctl mapped:1 visible:1), hide removes it, resummon works, convert + restore tested
 
 ## Memory Stored
 Bug fix memory stored for pyfiglet fonts package resolution (`pyfiglet.fonts` module missing in bundle, fixed by adding `pyfiglet/fonts/__init__.py` and font file)

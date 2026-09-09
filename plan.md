@@ -22,7 +22,7 @@ App: RandomSaver | User: darren | Plan scope: v1.0.0 panel plugin
 - [x] Store anti-pattern memory (pyfiglet.fonts missing in bundle)
 
 ## Pending / Blocked
-- [ ] Panel floating surface does NOT render visually despite summon returning ok; QML loads with no recursive errors, only non-fatal case mismatch warning and unrelated shell ReferenceError
+- [x] Panel floating surface now renders (fixed: Item root + FloatingWindow child, removed keepLoaded, Process/FileView backend; verified with hyprctl mapped:1 after shell restart — earlier no-show was stale shell Loader state + inverted root, not compositor)
 - [ ] User selected "No, hold for now" for commit/push (not pushed to https://github.com/laneyweb/RandomSaver)
 
 ## Upcoming (post-v1.0.0 if fixable)
